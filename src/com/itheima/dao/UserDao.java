@@ -13,8 +13,8 @@ public class UserDao {
 		
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?)";
-		runner.update(sql,user.getUid(),user.getUsername(),user.getPassword(),user.getName(),user.getEmail(),user.getTelephone(),user.getBirthday(),user.getSex(),user.getState(),user.getCode());
-		return 0;
+		int update = runner.update(sql,user.getUid(),user.getUsername(),user.getPassword(),user.getName(),user.getEmail(),user.getTelephone(),user.getBirthday(),user.getSex(),user.getState(),user.getCode());
+		return update;
 		
 	}
 
