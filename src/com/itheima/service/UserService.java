@@ -28,10 +28,21 @@ public class UserService {
 		try {
 			dao.active(activeCode);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//校验用户名是否存在
+	public boolean checkUsername(String username) {
+		UserDao dao = new UserDao();
+		Long isExist = 0L;
+		try {
+			isExist = dao.checkUsername(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isExist>0?true:false;
 	}
 	
 	
