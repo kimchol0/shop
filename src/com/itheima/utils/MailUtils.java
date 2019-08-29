@@ -21,17 +21,17 @@ public class MailUtils {
 
 		Properties props = new Properties();
 		//设置发送的协议
-		//props.setProperty("mail.transport.protocol", "SMTP");
+		props.setProperty("mail.transport.protocol", "SMTP");
 		
 		//设置发送邮件的服务器
-		//props.setProperty("mail.host", "smtp.126.com");
-		//props.setProperty("mail.smtp.auth", "true");// 指定验证为true
+		props.setProperty("mail.host", "smtp.126.com");
+		props.setProperty("mail.smtp.auth", "true");// 指定验证为true
 
 		// 创建验证器
 		Authenticator auth = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
 				//设置发送人的帐号和密码
-				return new PasswordAuthentication("admin@store.com", "admin");
+				return new PasswordAuthentication("haohao_itcast", "hao12345");
 			}
 		};
 

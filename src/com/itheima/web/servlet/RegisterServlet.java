@@ -78,6 +78,9 @@ public class RegisterServlet extends HttpServlet {
 		//判断是否注册成功
 		if(isRegisterSuccess) {
 			
+			//发送激活邮件
+			
+			
 			//跳转到注册成功页面
 			response.sendRedirect(request.getContextPath()+"/jsp/RegisterSuccess.jsp");
 			
