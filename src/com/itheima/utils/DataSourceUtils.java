@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-public class DataSourceUtil {
+public class DataSourceUtils {
     private static ComboPooledDataSource ds = new ComboPooledDataSource();
  
 
