@@ -26,7 +26,7 @@ public class ActiveServlet extends HttpServlet {
 		service.active(activeCode);
 		
 		//跳转到登录页面
-		response.sendRedirect(request.getContextPath()+"/jsp/longin.jsp");
+		response.sendRedirect(request.getContextPath()+"/jsp/login.jsp");
 		
 	}
 

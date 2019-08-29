@@ -24,8 +24,13 @@ public class UserService {
 	//激活
 	public void active(String activeCode) {
 		
-		UserDao dao = new userDao();
-		dao.active(activeCode);
+		UserDao dao = new UserDao();
+		try {
+			dao.active(activeCode);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
