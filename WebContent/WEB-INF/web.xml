@@ -25,6 +25,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ActiveServlet</servlet-name>
-    <url-pattern>/ActiveServlet</url-pattern>
+    <url-pattern>/active</url-pattern>
   </servlet-mapping>
 </web-app>

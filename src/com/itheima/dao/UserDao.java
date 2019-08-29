@@ -18,4 +18,14 @@ public class UserDao {
 		
 	}
 
+	//激活
+	public void active(String activeCode) throws SQLException {
+		
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "update user set state=? where code=?";
+		runner.update(sql,1,activeCode);
+		
+		
+	}
+
 }

@@ -21,6 +21,14 @@ public class UserService {
 		
 	}
 	
+	//激活
+	public void active(String activeCode) {
+		
+		UserDao dao = new userDao();
+		dao.active(activeCode);
+		
+	}
+	
 	
 
 }
