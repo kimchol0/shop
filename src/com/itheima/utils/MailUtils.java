@@ -41,7 +41,7 @@ public class MailUtils {
 		Message message = new MimeMessage(session);
 
 		//设置发送者
-		message.setFrom(new InternetAddress("admin@store.com"));
+		message.setFrom(new InternetAddress("haohao_itcast@126.com"));
 
 		//设置发送方式与接收者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); 
@@ -50,8 +50,8 @@ public class MailUtils {
 		message.setSubject("用户激活");
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
 
-		String url="http://localhost:8080/store_v4/UserServlet?method=active&code="+emailMsg;
-		String content="<h1>来自购物天堂的激活邮件!激活请点击以下链接!</h1><h3><a href='"+url+"'>"+url+"</a></h3>";
+		String url=emailMsg;
+		String content="<h1>来自购物天堂的激活邮件!激活请点击以下链接!</h1><h3>"+url+"</h3>";
 		//设置邮件内容
 		message.setContent(content, "text/html;charset=utf-8");
 
