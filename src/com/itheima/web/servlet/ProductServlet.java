@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,47 +20,13 @@ import com.itheima.utils.JedisPoolUtils;
 
 import redis.clients.jedis.Jedis;
 
-public class ProductServlet extends HttpServlet {
+public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ProductServlet() {
-        super();
-
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//获得请求哪个方法的method
-		String methodName= request.getParameter("method");
-		if("productList".equals(methodName)) {
-			
-			productList(request,response);
-			
-		}else if("categoryList".equals(methodName)) {
-			
-			categoryList(request,response);
-			
-		}else if("index".equals(methodName)) {
-			
-			index(request,response);
-			
-		}else if("productInfo".equals(methodName)) {
-			
-			productInfo(request,response);
-			
-		}
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doGet(request, response);
-	}
-	
 	//模块中的功能同方法进行区分的
 	
 	//显示商品的类别的功能
-	protected void categoryList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void categoryList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ProductService service = new ProductService();
 		
@@ -85,7 +50,7 @@ public class ProductServlet extends HttpServlet {
 	}
 	
 	//显示首页的功能
-	protected void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ProductService service = new ProductService();
 		
@@ -109,7 +74,7 @@ public class ProductServlet extends HttpServlet {
 	}
 	
 	//显示商品详细信息
-	protected void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//获得当前页
 		String currentPage = request.getParameter("currentPage");
 		//获得商品类别
@@ -167,7 +132,7 @@ public class ProductServlet extends HttpServlet {
 	
 	
 	//根据商品的类别获得商品的列表
-	protected void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//获得cid
 				String cid = request.getParameter("cid");
 				
