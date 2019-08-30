@@ -26,11 +26,11 @@ public class JedisPoolUtils {
 	            e.printStackTrace();
 	        }
 	        JedisPoolConfig config=new JedisPoolConfig();
-	        config.setMaxTotal(Integer.parseInt(properties.getProperty("maxTotal")));
-	        config.setMaxIdle(Integer.parseInt(properties.getProperty("maxIdle")));
+	        config.setMaxTotal(Integer.parseInt(properties.getProperty("redis.maxTotal")));
+	        config.setMaxIdle(Integer.parseInt(properties.getProperty("redis.maxIdle")));
 
 	        //初始化Jedispool
-	        jedisPool=new JedisPool(config,properties.getProperty("host"), Integer.parseInt(properties.getProperty("port")));
+	        jedisPool=new JedisPool(config,properties.getProperty("redis.url"), Integer.parseInt(properties.getProperty("redis.port")));
 
 
 	    }
