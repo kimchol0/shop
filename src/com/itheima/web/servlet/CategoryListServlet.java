@@ -8,41 +8,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.itheima.domain.Category;
-import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 
-public class IndexServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-    public IndexServlet() {
+public class CategoryListServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+
+    public CategoryListServlet() {
         super();
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+			
 		ProductService service = new ProductService();
 		
-		//准备热门商品----List<Product>
-		List<Product> hotProductList = service.findHotProductList();
-		
-		//准备最新商品----List<Product>
-		List<Product> newProductList = service.findNewProductList();
-		
 		//准备分类数据
-		/*
-		 * List<Category> categoryList = service.findAllCategory();
-		 * 
-		 * request.setAttribute("categoryList", categoryList);
-		 */
-		request.setAttribute("hotProductList", hotProductList);
-		request.setAttribute("newProductList", newProductList);
+		List<Category> categoryList = service.findAllCategory();
+		//list转换为json
+		Gson gson = new Gson();
+		String json = gson.toJson(categoryList);
 		
-		request.getRequestDispatcher("/jsp/index.jsp").forward(request,response);
-	
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().write(json);
+		
 	}
 
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 

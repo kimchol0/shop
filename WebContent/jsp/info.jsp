@@ -17,8 +17,8 @@
 	<body>
 		<div class="container">
 
-			<%--包含导航条 --%>
-			<%-- <%@include file="/jsp/header.jsp" %> --%>
+			<!-- 引入header.jsp -->
+			<jsp:include page="/jsp/header.jsp"></jsp:include>
 
 			<div class="container">
 				<div class="main_con">
