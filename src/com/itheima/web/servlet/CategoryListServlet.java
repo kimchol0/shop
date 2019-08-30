@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.itheima.domain.Category;
 import com.itheima.service.ProductService;
+import com.itheima.utils.JedisPoolUtils;
+
+import redis.clients.jedis.Jedis;
 
 
 public class CategoryListServlet extends HttpServlet {
@@ -26,14 +29,22 @@ public class CategoryListServlet extends HttpServlet {
 			
 		ProductService service = new ProductService();
 		
-		//准备分类数据
-		List<Category> categoryList = service.findAllCategory();
-		//list转换为json
-		Gson gson = new Gson();
-		String json = gson.toJson(categoryList);
-		
+		//从缓存中查询categoryList如果有直接使用，如果没有再从数据库中查询，再存到缓存中
+		//1.获得jedis对象，链接redis数据库
+		Jedis jedis = JedisPoolUtils.getJedis();
+		String categoryListJson = jedis.get("categoryListJson");//key名字自己起
+		//2.判断categoryListJson是否为空
+		if(categoryListJson==null) {
+			System.out.println("缓存没有数据，查询数据库");
+			List<Category> categoryList = service.findAllCategory();//从数据库查
+			//List转换为json
+			Gson gson = new Gson();
+			categoryListJson = gson.toJson(categoryList);
+			jedis.set("categoryListJson",categoryListJson);
+		}
+
 		response.setContentType("text/html;charset=UTF-8");
-		response.getWriter().write(json);
+		response.getWriter().write(categoryListJson);
 		
 	}
 
