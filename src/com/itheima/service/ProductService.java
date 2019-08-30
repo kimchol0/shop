@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
+import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 
 public class ProductService {
@@ -44,6 +45,50 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return categoryList;
+	}
+
+	public PageBean findProductListByCid(String cid,int currentPage,int currentCount) {
+		
+		ProductDao dao = new ProductDao();
+		
+		//封装一个PageBean 返回给web
+		
+		PageBean<Product> pagebean = new PageBean<Product>();
+		
+		/* 这两行移到了web层。（就是ProductListByCidServlet）
+		 * int currentPage = 1; 
+		 * int currentCount= 12;
+		 */
+		
+		//1.封装当前页
+		pagebean.setCurrentPage(currentPage);
+		
+		//2.封装每页显示的条数
+		pagebean.setCurrentCount(currentCount);
+		
+		//3.封装总条数
+		int totalCount = 0;
+		try {
+			totalCount = dao.getCount(cid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pagebean.setTotalCount(totalCount);
+		//4封装总页数
+		int totalPage = (int) Math.ceil(1.0*totalCount/currentCount);
+		pagebean.setTotalPage(totalPage);
+		//5.当前页显示的数据
+		// select * from product where cid=? limit ?,?
+		//当前页与起始索引index的关系
+		int index = (currentPage-1)*currentCount;
+		List<Product> list = null;
+		try {
+			list = dao.findProductByPage(cid,index,currentCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pagebean.setList(list);
+		return pagebean;
 	}
 	
 }
