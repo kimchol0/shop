@@ -42,10 +42,10 @@
 			
 			<c:forEach items="${pagebean.list}" var="pro">
 				<div class="col-md-2" style="height:250px">
-				<a href="${pageContext.request.contextPath}/productInfo?pid=${pro.pid}&cid=${cid}&currentPage=${pagebean.currentPage}">
+				<a href="${pageContext.request.contextPath}/product?method=productInfo&pid=${pro.pid}&cid=${cid}&currentPage=${pagebean.currentPage}">
 					<img src="${pageContext.request.contextPath}/${pro.pimage}" width="170" height="170" style="display: inline-block;">
 				</a>
-				<p><a href="${pageContext.request.contextPath}/productInfo?pid=${pro.pid}&cid=${cid}&currentPage=${pagebean.currentPage}" style='color:green'>${pro.pname}</a></p>
+				<p><a href="${pageContext.request.contextPath}/product?method=productInfo&pid=${pro.pid}&cid=${cid}&currentPage=${pagebean.currentPage}" style='color:green'>${pro.pname}</a></p>
 				<p><font color="#FF0000">商城价：&yen; ${pro.shop_price} </font></p>
 			</div>
 			</c:forEach>
@@ -66,7 +66,7 @@
 			</c:if>
 			<c:if test="${pagebean.currentPage!=1 }">
 				<li>
-				<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${pagebean.currentPage-1 }" aria-label="Previous">
+				<a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid }&currentPage=${pagebean.currentPage-1 }" aria-label="Previous">
 					<span aria-hidden="true">&raquo;</span>
 				</a>
 			</li>
@@ -79,7 +79,7 @@
 					<li class="active"><a href="javascript:void(0);">${page }</a></li>
 				</c:if>
 				<c:if test="${page!=pagebean.currentPage }">
-					<li><a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${page }">${page }</a></li>
+					<li><a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid }&currentPage=${page }">${page }</a></li>
 				</c:if>
 			
 			</c:forEach>
@@ -94,7 +94,7 @@
 			</c:if>
 			<c:if test="${pagebean.currentPage!=pagebean.totalPage }">
 				<li>
-					<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${pagebean.currentPage+1 }" aria-label="Next">
+					<a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid }&currentPage=${pagebean.currentPage+1 }" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>

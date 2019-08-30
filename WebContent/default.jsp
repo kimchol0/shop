@@ -7,7 +7,7 @@
 </head>
 <body>
 	<%
-		response.sendRedirect(request.getContextPath()+"/index");
+		response.sendRedirect(request.getContextPath()+"/product?method=index");
 	%>
 </body>
 </html>
