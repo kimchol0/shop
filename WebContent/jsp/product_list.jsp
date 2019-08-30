@@ -64,9 +64,9 @@
 					</a>
 			</li>
 			</c:if>
-			<c:if test="${pagebean.currentPage!==1 }">
+			<c:if test="${pagebean.currentPage!=1 }">
 				<li>
-				<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${pagebean.currentPage-1 }" aria-label="Next">
+				<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${pagebean.currentPage-1 }" aria-label="Previous">
 					<span aria-hidden="true">&raquo;</span>
 				</a>
 			</li>
@@ -92,7 +92,7 @@
 					</a>
 			</li>
 			</c:if>
-			<c:if test="${pagebean.currentPage!==pagebean.totalPage }">
+			<c:if test="${pagebean.currentPage!=pagebean.totalPage }">
 				<li>
 					<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${pagebean.currentPage+1 }" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
