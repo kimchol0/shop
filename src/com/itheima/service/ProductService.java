@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.itheima.dao.ProductDao;
+import com.itheima.domain.Category;
 import com.itheima.domain.Product;
 
 public class ProductService {
@@ -16,7 +17,6 @@ public class ProductService {
 		try {
 			hotProductList = dao.findHotProductList();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return hotProductList;
@@ -33,6 +33,17 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return newProductList;
+	}
+
+	public List<Category> findAllCategory() {
+		ProductDao dao = new ProductDao();
+		List<Category> categoryList  = null;
+		try {
+			categoryList = dao.findAllCategory();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categoryList;
 	}
 	
 }

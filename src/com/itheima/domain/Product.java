@@ -14,7 +14,7 @@ public class Product {
 	private String pdesc;
 	private int pflag;
 	private String cid;
-	private Category catrgory;
+	private Category catgory;
 	
 	public String getPid() {
 		return pid;
@@ -76,11 +76,12 @@ public class Product {
 	public void setCid(String cid) {
 		this.cid = cid;
 	}
-	public Category getCatrgory() {
-		return catrgory;
+	public Category getCatgory() {
+		return catgory;
 	}
-	public void setCatrgory(Category catrgory) {
-		this.catrgory = catrgory;
+	public void setCatgory(Category catgory) {
+		this.catgory = catgory;
 	}
+
 	
 }

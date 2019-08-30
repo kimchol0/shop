@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itheima.domain.Category;
 import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 
@@ -28,6 +29,10 @@ public class IndexServlet extends HttpServlet {
 		//准备最新商品----List<Product>
 		List<Product> newProductList = service.findNewProductList();
 		
+		//准备分类数据
+		List<Category> categoryList = service.findAllCategory();
+		
+		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("hotProductList", hotProductList);
 		request.setAttribute("newProductList", newProductList);
 		
