@@ -20,12 +20,19 @@ public class ProductInfoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//获得当前页
+		String currentPage = request.getParameter("currentPage");
+		//获得商品类别
+		String cid = request.getParameter("cid");
+		
 		//获得要查询商品的pid
 		String pid = request.getParameter("pid");
 		ProductService service = new ProductService();
 		Product product = service.findProductByPid(pid);
 		
 		request.setAttribute("product", product);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("cid", cid);
 		
 		request.getRequestDispatcher("/jsp/product_info.jsp").forward(request, response);
 		

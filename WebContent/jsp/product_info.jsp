@@ -64,7 +64,11 @@
 								<%--加入到购物车 --%>
 								<a href="${pageContext.request.contextPath}/jsp/cart.jsp">
 									<input style="background: url('${pageContext.request.contextPath}/img/product.gif') no-repeat scroll 0 -600px rgba(0, 0, 0, 0);height:36px;width:127px;" value="加入购物车" type="button">
-								</a> &nbsp;收藏商品</div>
+								</a> &nbsp;收藏商品
+							</div>
+						</div>
+						<div>
+							<a href="${pageContext.request.contextPath}/productListByCid?cid=${cid }&currentPage=${currentPage }">返回列表页面</a>
 						</div>
 					</div>
 				</div>
