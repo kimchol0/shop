@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
+import com.itheima.domain.Order;
 import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
+import com.itheima.utils.DataSourceUtils;
 
 public class ProductService {
 	
@@ -100,6 +102,28 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return product;
+	}
+	//提交订单，将订单的数据和订单项的数据存储到数据库中
+	public void submitOrder(Order order) {
+		
+		ProductDao dao = new ProductDao();
+		
+		try {
+			//开启事务
+			DataSourceUtils.startTransaction();
+			//调用dao存储order表数据的方法
+			dao.addOrders(order);
+			//调用dao存储orderitem表数据的方法
+			/* dao.addOrderItem(order.getOrderitems()); */
+			dao.addOrderItem(order);
+			
+		} catch (SQLException e) {
+			DataSourceUtils.rollbackAndClose();
+			e.printStackTrace();
+		} finally {
+			DataSourceUtils.commitAndClose();
+		}
+		
 	}
 	
 }

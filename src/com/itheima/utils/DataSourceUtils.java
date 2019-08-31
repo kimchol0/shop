@@ -11,7 +11,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DataSourceUtils {
     private static ComboPooledDataSource ds = new ComboPooledDataSource();
- 
+    private static ThreadLocal<Connection> tl=new ThreadLocal<>();
 
     public static DataSource getDataSource() {
         return ds;
@@ -64,5 +64,46 @@ public class DataSourceUtils {
             rs = null;
         }
  
+    }
+    
+  //开启事务
+    public static void startTransaction() throws SQLException{
+        getConnection().setAutoCommit(false);
+    }
+
+    /**
+     * 事务提交且释放连接
+     */
+    public static void commitAndClose(){
+        Connection conn = null;
+        try {
+            conn=getConnection();
+            //事务提交
+            conn.commit();
+            //关闭资源
+            conn.close();
+            //解除版定
+            tl.remove();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 事务回滚且释放资源
+     */
+    public static void rollbackAndClose(){
+        Connection conn = null;
+        try {
+            conn=getConnection();
+            //事务回滚
+            conn.rollback();
+            //关闭资源
+            conn.close();
+            //解除版定
+            tl.remove();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -69,7 +69,31 @@ public class ProductServlet extends BaseServlet {
 		//该订单属于哪个用户
 		order.setUser(null);
 		//该订单中有多少订单项
-		Map<String,CartItem> cartitems = cart.getCartitems();
+		Map<String,CartItem> cartItems = cart.getCartitems();
+		for(Map.Entry<String, CartItem> entry:cartItems.entrySet()) {
+			//取出每一个购物项
+			CartItem cartitem = entry.getValue();
+			//创建新的订单项
+			OrderItem orderitem = new OrderItem();
+			//订单项的ID
+			orderitem.setItemid(CommonsUtils.getUUID());
+			//订单项内商品的购买数量
+			orderitem.setCount(cartitem.getBuyNum());
+			//订单项小计
+			orderitem.setSubtotal(cartitem.getSubtotal());
+			//订单项内部的商品
+			orderitem.setProduct(cartitem.getProduct());
+			//该订单项属于哪个订单
+			orderitem.setOrder(order);
+			
+			//将该订单项添加到订单的订单项集合中
+			order.getOrderitems().add(orderitem);
+		}
+		
+		//order对象封装完毕
+		//传递数据到service层
+		ProductService service = new ProductService();
+		service.submitOrder(order);
 		
 	}
 	

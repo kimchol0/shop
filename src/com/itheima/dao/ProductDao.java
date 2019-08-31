@@ -1,5 +1,6 @@
 package com.itheima.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.Order;
+import com.itheima.domain.OrderItem;
 import com.itheima.domain.Product;
 import com.itheima.utils.DataSourceUtils;
 
@@ -62,6 +65,27 @@ public class ProductDao {
 		String sql = "select * from product where pid=?";
 		return runner.query(sql, new BeanHandler<Product>(Product.class),pid);
 		
+	}
+
+	//向orders表插入数据
+	public void addOrders(Order order) throws SQLException {
+		
+		QueryRunner runner = new QueryRunner();
+		String sql = "insert into orders values(?,?,?,?,?,?,?,?)";
+		Connection conn = DataSourceUtils.getConnection();
+		runner.update(conn,sql,order.getOid(),order.getOrderTime(),order.getTotal(),order.getState(),order.getAddress(),order.getName(),order.getTelephone(),order.getUser().getUid());
+		
+	}
+	
+	//向ordertiem表插入数据
+	public void addOrderItem(Order order) throws SQLException {
+		QueryRunner runner = new QueryRunner();
+		String sql = "insert into orderitem values(?,?,?,?,?)";
+		Connection conn = DataSourceUtils.getConnection();
+		List<OrderItem> orderitems = order.getOrderitems();
+		for(OrderItem item:orderitems) {
+			runner.update(conn,sql,item.getItemid(),item.getCount(),item.getSubtotal(),item.getProduct().getPid(),item.getOrder().getOid());
+		}
 	}
 	
 }
