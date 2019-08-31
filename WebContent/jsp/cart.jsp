@@ -36,11 +36,30 @@
 				padding: 0 10px;
 			}
 		</style>
+		
+		<script type="text/javascript">
+			
+			function delProFromCart(pid){
+				
+				if(confirm("您是否要删除该项？")){
+					location.href="${pageContext.request.contextPath}/product?method=delProFromCart&pid="+pid;
+				}
+				
+			}
+		
+		</script>
+		
+		
+		
 	</head>
 
 	<body>
 			<!-- 引入header.jsp -->
 			<jsp:include page="/jsp/header.jsp"></jsp:include>
+		
+		
+		<!-- 判断购物车中是否有商品 -->
+		<c:if test="${!empty cart.cartitems }">
 		<div class="container">
 			<div class="row">
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -75,7 +94,7 @@
 									<span class="subtotal">￥${entry.value.subtotal}</span>
 								</td>
 								<td>
-									<a href="javascript:;" class="delete">删除</a>
+									<a href="javascript:;" onclick="delProFromCart('${entry.value.product.pid}')"class="delete">删除</a>
 								</td>
 							</tr>
 
@@ -103,7 +122,15 @@
 			</div>
 
 		</div>
-
+		</c:if>
+		<c:if test="${empty cart.cartitems }">
+			<div>
+				<img alt="" src="${pageContext.request.contextPath}/images/cart-empty.png"/>
+				<a href="${pageContext.request.contextPath}">返回首页</a>
+			</div>
+		</c:if>
+				
+				
 		<div style="margin-top:50px;">
 			<img src="${pageContext.request.contextPath}/img/footer.jpg" width="100%" height="78" alt="我们的优势" title="我们的优势" />
 		</div>

@@ -105,8 +105,30 @@ public class ProductServlet extends BaseServlet {
 		
 }
 	
+	//删除单一商品
+	public void delProFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		//获得要删除item的pid
+		String pid = request.getParameter("pid");
+		//删除session中的购物车中的购物项集合中的item
+		HttpSession session = request.getSession();
+		Cart cart = (Cart) session.getAttribute("cart");
+		if(cart!=null) {
+			
+			Map<String,CartItem> cartItems = cart.getCartitems();
+			//需要修改总价
+			cart.setTotal(cart.getTotal()-cartItems.get(pid).getSubtotal());
+			//删除
+			cartItems.remove(pid);
+			cart.setCartitems(cartItems);
+		}
+		
+		session.setAttribute("cart", cart);
+		
+		//跳转回cart.jsp
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
 	
+	}
 	
 	
 	//显示商品的类别的功能
