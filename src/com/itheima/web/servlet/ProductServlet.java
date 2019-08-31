@@ -10,8 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.itheima.domain.Cart;
+import com.itheima.domain.CartItem;
 import com.itheima.domain.Category;
 import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
@@ -24,6 +27,58 @@ public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
 	//模块中的功能同方法进行区分的
+	
+	//将商品添加到购物车
+	public void addProductToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		ProductService service = new ProductService();
+		
+		//获得放到购物车的pid		
+		String pid = request.getParameter("pid");
+		
+		//获得该商品的购买数量
+		int buyNum = Integer.parseInt(request.getParameter("buyNum"));
+		
+		//获得product对象
+		Product product = service.findProductByPid(pid);
+		
+		//计算小计
+		double subTotal = product.getShop_price()*buyNum;
+		
+		//封装CartItem
+		CartItem item = new CartItem();
+		item.setProduct(product);
+		item.setBuyNum(buyNum);
+		item.setSubtotal(subTotal);
+		
+		//获得购物车   判断是否在Session中已经存在购物车
+		
+		Cart cart = (Cart) session.getAttribute("cart");
+		if(cart==null) {
+			cart = new Cart();
+		}
+	
+		//将购物项放到车中----key是pid
+		//获得购物车中的购物项集合
+		cart.getCartitems().put(product.getPid(), item);
+		
+		//计算总计
+		double total = cart.getTotal()+subTotal;
+		cart.setTotal(total);
+		
+		//将车再次放回session
+		session.setAttribute("cart", cart);
+		
+		//直接跳转到购物车页面
+		request.getRequestDispatcher("/jsp/cart.jsp").forward(request, response);
+		
+}
+	
+	
+	
+	
 	
 	//显示商品的类别的功能
 	public void categoryList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

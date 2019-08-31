@@ -7,7 +7,7 @@ public class Product {
 	private String pid;
 	private String pname;
 	private String market_price;
-	private String shop_price;
+	private int shop_price;
 	private String pimage;
 	private Date pdate;
 	private int is_hot;
@@ -34,10 +34,10 @@ public class Product {
 	public void setMarket_price(String market_price) {
 		this.market_price = market_price;
 	}
-	public String getShop_price() {
+	public int getShop_price() {
 		return shop_price;
 	}
-	public void setShop_price(String shop_price) {
+	public void setShop_price(int shop_price) {
 		this.shop_price = shop_price;
 	}
 	public String getPimage() {

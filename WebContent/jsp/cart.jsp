@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html>
 
@@ -42,7 +43,6 @@
 			<jsp:include page="/jsp/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="row">
-
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
 					<strong style="font-size:16px;margin:5px 0;">订单详情</strong>
 					<table class="table table-bordered">
@@ -55,27 +55,32 @@
 								<th>小计</th>
 								<th>操作</th>
 							</tr>
-							<tr class="active">
+							<c:forEach items="${cart.cartitems }" var="entry">
+								
+								<tr class="active">
 								<td width="60" width="40%">
 									<input type="hidden" name="id" value="22">
-									<img src="${pageContext.request.contextPath}/products/2/dadonggua.jpg" width="70" height="60">
+									<img src="${pageContext.request.contextPath}/${entry.value.product.pimage}" width="70" height="60">
 								</td>
 								<td width="30%">
-									<a target="_blank"> 有机蔬菜      大冬瓜...</a>
+									<a target="_blank">${entry.value.product.pname}</a>
 								</td>
 								<td width="20%">
-									￥298.00
+									￥${entry.value.product.shop_price}
 								</td>
 								<td width="10%">
-									<input type="text" name="quantity" value="1" maxlength="4" size="10">
+									${entry.value.buyNum }
 								</td>
 								<td width="15%">
-									<span class="subtotal">￥596.00</span>
+									<span class="subtotal">￥${entry.value.subtotal}</span>
 								</td>
 								<td>
 									<a href="javascript:;" class="delete">删除</a>
 								</td>
 							</tr>
+
+							</c:forEach>
+						
 						</tbody>
 					</table>
 				</div>
@@ -85,7 +90,7 @@
 				<div style="text-align:right;">
 					<em style="color:#ff6600;">
 				登录后确认是否享有优惠&nbsp;&nbsp;
-			</em> 赠送积分: <em style="color:#ff6600;">596</em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥596.00元</strong>
+			</em> 赠送积分: <em style="color:#ff6600;">596</em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥ ${cart.total }</strong>
 				</div>
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 					<a href="${pageContext.request.contextPath}/jsp/order_info.jsp" id="clear" class="clear">清空购物车</a>
