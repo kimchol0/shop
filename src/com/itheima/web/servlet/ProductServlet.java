@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -61,8 +62,36 @@ public class ProductServlet extends BaseServlet {
 		}
 	
 		//将购物项放到车中----key是pid
-		//获得购物车中的购物项集合
-		cart.getCartitems().put(product.getPid(), item);
+		
+		//判断购物车中是否已经包含此购物项，判断key是否已存在
+		//如果购物车中已经存在该商品，将现在买的数量与原有的数据量进行相加操作
+		Map<String,CartItem> cartItems = cart.getCartitems();
+		
+		double newsubTotal = 0.0;
+		
+		if(cartItems.containsKey(pid)) {
+			
+			//取出原有商品的数量
+			CartItem cartitem = cartItems.get(pid);
+			//修改数
+			int oldBuyNum = cartitem.getBuyNum();
+			oldBuyNum+=buyNum;
+			cartitem.setBuyNum(oldBuyNum);
+			
+			cart.setCartitems(cartItems);
+			
+			//修改小计
+			//原来该商品的小计
+			double oldsubTotal = cartitem.getSubtotal();
+			//新买的商品的小计
+			newsubTotal = buyNum*product.getShop_price();
+			cartitem.setSubtotal(oldsubTotal+newsubTotal);
+		}else {
+			//如果没有该商品
+			//获得购物车中的购物项集合
+			cart.getCartitems().put(product.getPid(), item);
+			newsubTotal = buyNum*product.getShop_price();
+		}
 		
 		//计算总计
 		double total = cart.getTotal()+subTotal;
@@ -72,7 +101,7 @@ public class ProductServlet extends BaseServlet {
 		session.setAttribute("cart", cart);
 		
 		//直接跳转到购物车页面
-		request.getRequestDispatcher("/jsp/cart.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
 		
 }
 	
