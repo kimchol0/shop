@@ -3,6 +3,7 @@ package com.itheima.web.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,13 @@ import com.google.gson.Gson;
 import com.itheima.domain.Cart;
 import com.itheima.domain.CartItem;
 import com.itheima.domain.Category;
+import com.itheima.domain.Order;
+import com.itheima.domain.OrderItem;
 import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
+import com.itheima.domain.User;
 import com.itheima.service.ProductService;
+import com.itheima.utils.CommonsUtils;
 import com.itheima.utils.JedisPoolUtils;
 
 import redis.clients.jedis.Jedis;
@@ -28,6 +33,49 @@ public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
 	//模块中的功能同方法进行区分的
+	
+	public void submitOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		//判断用户是否已经登录，未登录以下代码不执行
+		User user = (User) session.getAttribute("user");
+		
+		if(user==null) {
+			//没有登录
+			response.sendRedirect(request.getContextPath()+"/jsp/login.jsp");
+			return ;
+		}
+		//目的：封装一个Order对象，传递到Service层
+		Order order = new Order();
+		//该订单的订单号
+		String oid = CommonsUtils.getUUID();
+		order.setOid(oid);
+		//下单时间
+		order.setOrderTime(new Date());
+		//该订单的总金额
+		//获得session中的购物车
+		Cart cart = (Cart) session.getAttribute("cart");
+		double total = cart.getTotal();
+		order.setTotal(total);
+		//订单支付状态 1代表已付款0代表未付款
+		order.setState(0);
+		//收货地址
+		order.setAddress(null);
+		//收货人
+		order.setName(null);
+		//收货人电话
+		order.setTelephone(null);
+		//该订单属于哪个用户
+		order.setUser(null);
+		//该订单中有多少订单项
+		Map<String,CartItem> cartitems = cart.getCartitems();
+		
+	}
+	
+	
+	
+	
 	
 	//将商品添加到购物车
 	public void addProductToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
