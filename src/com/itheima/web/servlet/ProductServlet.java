@@ -130,6 +130,17 @@ public class ProductServlet extends BaseServlet {
 	
 	}
 	
+	//清空购物车
+	public void clearCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		session.removeAttribute("cart");
+		
+		//跳转回cart.jsp
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
+		
+	}
+	
 	
 	//显示商品的类别的功能
 	public void categoryList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
