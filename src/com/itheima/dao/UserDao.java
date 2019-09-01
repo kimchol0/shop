@@ -40,11 +40,14 @@ public class UserDao {
 	//登录方法
 	public User login(User user) throws SQLException {
 		
+		System.out.println("DDDD++++++----"+user);
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
-		String sql = "select count(*) from user where username=? and password=?";
+		String sql = "select * from user where username=? and password=?";
 		ResultSetHandler blh = new BeanHandler(User.class);
-		User u = (User) runner.query(sql, blh);
-		return user;
+		System.out.println("Uname"+user.getUsername());
+		System.out.println("PWD"+user.getPassword());
+		User u = (User) runner.query(sql,blh , user.getUsername() , user.getPassword());
+		return u;
 		
 	}
 }

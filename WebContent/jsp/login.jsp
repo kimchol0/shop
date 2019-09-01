@@ -53,7 +53,7 @@ font {
 				<font>会员登录</font>USER LOGIN
 
 				<div>&nbsp;</div>
-<form class="form-horizontal" name="aaaaaa" id="aaaaaa" method="post">
+<form class="form-horizontal" name="aaaaaa" id="aaaaaa" method="post" action="${pageContext.request.contextPath}/login">
   
  <div class="form-group">
     <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -100,7 +100,7 @@ font {
   </div>
 </form>
 </div>			
-	</div>
+</div>
 </div>
 </div>	
 

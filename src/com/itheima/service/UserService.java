@@ -49,6 +49,7 @@ public class UserService {
 	public User login(User user) throws SQLException {
 		
 		UserDao dao = new UserDao();
+		System.out.println("ssss"+user);
 		User u = dao.login(user);
 		return u;
 		

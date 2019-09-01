@@ -25,23 +25,30 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("进入servlet");
 		
 		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
 		UserService service = new UserService();
-		User userFromSession = new User();
-		request.getSession().setAttribute("user", userFromSession);
 		
-		System.out.println("获取的session中的密码为："+userFromSession.getPassword());
+		System.out.println("获取的session中的用户名为："+user.getName());
+		System.out.println("获取的session中的密码为："+user.getPassword());
 		
 		try {
 			
+			System.out.println("登录成功1：" );
 			User userFromDataBase = service.login(user);
+			System.out.println(userFromDataBase);
+			System.out.println("登录成功2："+userFromDataBase.getPassword());
+	     	request.getSession().setAttribute("user", user);
 			
-			System.out.println("从数据库中获取的数据："+userFromDataBase.getPassword());
-			
-			if((userFromSession.getUsername()==userFromDataBase.getUsername())&&(userFromSession.getPassword()==userFromDataBase.getPassword())) {
-				response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
-			}
+		 	if((user.getUsername()==userFromDataBase.getUsername())&&(user.getPassword()==userFromDataBase.getPassword())) {
+				
+		 		response.sendRedirect(request.getContextPath()+"/WebContent/jsp/cart.jsp");
+				
+		 	}
 			else {
+				
 				response.sendRedirect(request.getContextPath()+"/jsp/a.jsp");
+			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
