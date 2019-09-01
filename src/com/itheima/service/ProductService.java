@@ -125,5 +125,11 @@ public class ProductService {
 		}
 		
 	}
+
+	public void updateOrderAddr(Order order) throws SQLException {
+		ProductDao dao = new ProductDao();
+		dao.updateOrderAddr(order);
+		
+	}
 	
 }

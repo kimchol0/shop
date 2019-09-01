@@ -78,6 +78,7 @@ public class DataSourceUtils {
         Connection conn = null;
         try {
             conn=getConnection();
+            conn.setAutoCommit(false);
             //事务提交
             conn.commit();
             //关闭资源
@@ -96,6 +97,7 @@ public class DataSourceUtils {
         Connection conn = null;
         try {
             conn=getConnection();
+            conn.setAutoCommit(false);
             //事务回滚
             conn.rollback();
             //关闭资源

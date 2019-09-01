@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
 		
 		System.out.println("获取的session中的用户名为："+user.getUsername());
 		System.out.println("获取的session中的密码为："+user.getPassword());
-		
 		try {
 			UserService service = new UserService();
 			System.out.println("登录成功1：" );

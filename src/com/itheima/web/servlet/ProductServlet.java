@@ -1,6 +1,8 @@
 package com.itheima.web.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,6 +15,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
 import com.itheima.domain.Cart;
@@ -34,6 +38,55 @@ public class ProductServlet extends BaseServlet {
        
 	//模块中的功能同方法进行区分的
 	
+	
+	//确认订单---更新收货人信息+在线支付
+	public void confirmOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		//更新收货人信息
+		Map<String, String[]> properties = request.getParameterMap();
+		Order order = new Order();
+		try {
+			BeanUtils.populate(order, properties);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		ProductService service = new ProductService();
+		try {
+			service.updateOrderAddr(order);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//2.在线支付
+		//获得选择的银行
+		String pd_FrpID = request.getParameter("pd_FrpID");
+		
+		/*
+		 * if(pd_FrpID.equals("ABC-NET-B2C")) {
+		 * 
+		 * //接入农行的接口
+		 * 
+		 * }else if(pd_FrpID.equals("ICBC-NET-B2C")){
+		 * 
+		 * //接入工行的接口
+		 * 
+		 * } //..其他银行
+		 */	
+		
+		//只接入一个接口，这个接口已经集成所有的银行接口了，这个接口是第三方支付平台提供
+		//接入易宝支付
+		
+		
+		
+		
+	}
+	
+	
+	
+	//提交订单
 	public void submitOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
@@ -67,7 +120,7 @@ public class ProductServlet extends BaseServlet {
 		//收货人电话
 		order.setTelephone(null);
 		//该订单属于哪个用户
-		order.setUser(null);
+		order.setUser(user);
 		//该订单中有多少订单项
 		Map<String,CartItem> cartItems = cart.getCartitems();
 		for(Map.Entry<String, CartItem> entry:cartItems.entrySet()) {
@@ -94,6 +147,16 @@ public class ProductServlet extends BaseServlet {
 		//传递数据到service层
 		ProductService service = new ProductService();
 		service.submitOrder(order);
+		
+		
+		session.setAttribute("order", order);
+		//页面跳转
+		response.sendRedirect(request.getContextPath()+"/jsp/order_info.jsp");
+
+		
+		
+		
+		
 		
 	}
 	

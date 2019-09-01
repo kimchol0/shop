@@ -87,5 +87,12 @@ public class ProductDao {
 			runner.update(conn,sql,item.getItemid(),item.getCount(),item.getSubtotal(),item.getProduct().getPid(),item.getOrder().getOid());
 		}
 	}
+
+	public void updateOrderAddr(Order order) throws SQLException {
+
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "update orders set address=?,name=?,telephone=? where oid=?";
+		runner.update(sql,order.getAddress(),order.getName(),order.getTelephone(),order.getOid());
+	}
 	
 }
