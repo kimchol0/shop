@@ -38,15 +38,16 @@ public class UserDao {
 	}
 	
 	//登录方法
-	public User login(User user) throws SQLException {
-		
+	public User login(User user) throws SQLException,NullPointerException{
 		System.out.println("DDDD++++++----"+user);
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "select * from user where username=? and password=?";
 		ResultSetHandler blh = new BeanHandler(User.class);
-		System.out.println("Uname"+user.getUsername());
-		System.out.println("PWD"+user.getPassword());
+		System.out.println("Uname："+user.getUsername());
+		System.out.println("PWD："+user.getPassword());
+		
 		User u = (User) runner.query(sql,blh , user.getUsername() , user.getPassword());
+		System.out.println("从数据库中读取用户名和密码之后封装到User对象中的结果："+u);
 		return u;
 		
 	}

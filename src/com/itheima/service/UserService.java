@@ -46,7 +46,7 @@ public class UserService {
 	}
 	
 	//登录
-	public User login(User user) throws SQLException {
+	public User login(User user) throws SQLException,NullPointerException {
 		
 		UserDao dao = new UserDao();
 		System.out.println("ssss"+user);
