@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <HTML>
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
@@ -59,27 +60,30 @@
 										订单详情
 									</td>
 								</tr>
-										<tr onmouseover="this.style.backgroundColor = 'white'"
+							
+							
+								<c:forEach items="orderList" var="order" varStatus="vs">
+											<tr onmouseover="this.style.backgroundColor = 'white'"
 											onmouseout="this.style.backgroundColor = '#F5FAFE';">
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="18%">
-												1
+												${vs.count }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												BH1234356
+												${order.oid} 
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												998
+												${order.total} 
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												张XX
+												${order.name} 
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-													1=未付款、2=发货、3=已发货、4=订单完成
+												${order.state} 
 											</td>
 											<td align="center" style="HEIGHT: 22px">
 												<input type="button" value="订单详情" id="but${o.oid}" onclick="showDetail('${o.oid}')"/>
@@ -89,6 +93,7 @@
 											</td>
 							
 										</tr>
+								</c:forEach>
 							</table>
 						</td>
 					</tr>

@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.omg.PortableServer.POA;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.Order;
 import com.itheima.domain.Product;
 import com.itheima.utils.DataSourceUtils;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -28,6 +29,12 @@ public class AdminDao {
 				product.getShop_price(),product.getPimage(),product.getPdate(),
 				product.getIs_hot(),product.getPdesc(),product.getPflag(),product.getCatgory().getCid());
 		
+	}
+
+	public List<Order> findAllOrders() throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from orders";
+		return runner.query(sql, new BeanListHandler<Order>(Order.class));
 	}
 	
 }

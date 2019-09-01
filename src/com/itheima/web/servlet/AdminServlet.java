@@ -9,11 +9,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.itheima.domain.Category;
+import com.itheima.domain.Order;
 import com.itheima.service.AdminService;
 
 public class AdminServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	
+	//获得所有订单
+	public void findAllOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//获得所有的订单信息---List<Order>
+		AdminService service = new AdminService();
+		List<Order> orderList = service.findAllOrders();
+		request.setAttribute("orderList", orderList);
+		
+		request.getRequestDispatcher("/admin/order/list.jsp").forward(request, response);
+	}
 	
 	public void findAllCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
