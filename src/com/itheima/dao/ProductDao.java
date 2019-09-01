@@ -3,10 +3,12 @@ package com.itheima.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import com.itheima.domain.Category;
@@ -14,6 +16,7 @@ import com.itheima.domain.Order;
 import com.itheima.domain.OrderItem;
 import com.itheima.domain.Product;
 import com.itheima.utils.DataSourceUtils;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class ProductDao {
 	
@@ -93,6 +96,19 @@ public class ProductDao {
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "update orders set address=?,name=?,telephone=? where oid=?";
 		runner.update(sql,order.getAddress(),order.getName(),order.getTelephone(),order.getOid());
+	}
+
+	public List<Order> findAllOrders(String uid) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from orders where uid=?";
+		return runner.query(sql,new BeanListHandler<Order>(Order.class),uid);
+	}
+
+	public List<Map<String,Object>> findAllOrderItemsByOid(String oid) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select i.quantity,i.total,p.pimage,p.pname,p.shop_price from orderitem i,product p where i.pid=p.pid and i.oid=?";
+		List<Map<String,Object>> mapList = runner.query(sql, new MapListHandler(),oid);
+		return mapList;
 	}
 	
 }

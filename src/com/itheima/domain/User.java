@@ -14,6 +14,13 @@ public class User {
 	private String sex;
 	private int state;//是否激活
 	private String code;//激活码
+	private Order order;
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 	public String getUid() {
 		return uid;
 	}

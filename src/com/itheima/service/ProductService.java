@@ -2,10 +2,12 @@ package com.itheima.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
 import com.itheima.domain.Order;
+import com.itheima.domain.OrderItem;
 import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.utils.DataSourceUtils;
@@ -130,6 +132,30 @@ public class ProductService {
 		ProductDao dao = new ProductDao();
 		dao.updateOrderAddr(order);
 		
+	}
+	
+	//获得指定用户的订单
+	public List<Order> findAllOrders(String uid) {
+		ProductDao dao = new ProductDao();
+		List<Order> orderList = null;
+		try {
+			orderList = dao.findAllOrders(uid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orderList;
+	}
+	
+	//
+	public List<Map<String,Object>> findAllOrderItemsByOid(String oid) {
+		ProductDao dao = new ProductDao();
+		List<Map<String,Object>> mapList = null;
+		try {
+			mapList = dao.findAllOrderItemsByOid(oid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mapList;
 	}
 	
 }

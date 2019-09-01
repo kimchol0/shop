@@ -32,11 +32,71 @@ import com.itheima.utils.CommonsUtils;
 import com.itheima.utils.JedisPoolUtils;
 
 import redis.clients.jedis.Jedis;
+import sun.print.resources.serviceui;
 
 public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
 	//模块中的功能同方法进行区分的
+	
+	
+	//获得我的订单
+	public void myOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		//判断用户是否已经登录，未登录以下代码不执行
+		User user = (User) session.getAttribute("user");
+		
+		if(user==null) {
+			//没有登录
+			response.sendRedirect(request.getContextPath()+"/jsp/login.jsp");
+			return ;
+		}
+		
+	
+		ProductService service = new ProductService();
+		//查询该用户所有的订单信息（单表查询orders）
+		//集合中的每一个Order对象的数据是不完整的，缺少List<OrderItem> orderitems
+		List<Order> orderList = service.findAllOrders(user.getUid());
+		//循环所有的订单，为每个订单填充订单项集合信息
+		if(orderList!=null) {
+			for(Order order:orderList) {
+				//获得每一个订单的oid
+				String oid = order.getOid();
+				//查询该订单的所有的订单项---mapList封装的是多个订单项和该订单项中的商品的信息
+				List<Map<String,Object>> mapList = service.findAllOrderItemsByOid(oid);
+				//将mapList转换成List<OrderItem> orderitems 
+				for(Map<String, Object> map:mapList) {
+
+					try {
+						//从map中取出subTotal封装到orderitem中
+						OrderItem item = new OrderItem();
+						//item.setCount(Integer.parseInt(map.get("count").toString()));
+						BeanUtils.populate(item, map);
+						//从map中取出pimage,pname,shop_price封装到Product中
+						Product product = new Product();
+						BeanUtils.populate(product, map);
+						//将product封装到OrderItem
+						item.setProduct(product);
+						//将OrderItem封装到order中的orderItemList中
+						order.getOrderitems().add(item);
+					} catch (IllegalAccessException | InvocationTargetException e) {
+						e.printStackTrace();
+					}
+
+				}
+				
+			}
+		}
+		
+		//orderList封装完整了
+		request.setAttribute("orderList", orderList);
+		request.getRequestDispatcher("/jsp/order_list.jsp").forward(request,response);
+		
+		
+	}
+	
 	
 	
 	//确认订单---更新收货人信息+在线支付
