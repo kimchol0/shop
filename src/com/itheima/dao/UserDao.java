@@ -3,6 +3,8 @@ package com.itheima.dao;
 import java.sql.SQLException;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import com.itheima.domain.User;
@@ -33,5 +35,16 @@ public class UserDao {
 		String sql = "select count(*) from user where username=?";
 		Long query = (Long) runner.query(sql, new ScalarHandler(), username);
 		return query;
+	}
+	
+	//登录方法
+	public User login(User user) throws SQLException {
+		
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select count(*) from user where username=? and password=?";
+		ResultSetHandler blh = new BeanHandler(User.class);
+		User u = (User) runner.query(sql, blh);
+		return user;
+		
 	}
 }

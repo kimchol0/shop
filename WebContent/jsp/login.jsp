@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html>
 <head>
@@ -33,6 +34,10 @@ font {
     padding-right:17px;
 }
  </style>
+
+</script>
+ 
+ 
 </head>
 <body>
 			<!-- 引入header.jsp -->
@@ -48,18 +53,18 @@ font {
 				<font>会员登录</font>USER LOGIN
 
 				<div>&nbsp;</div>
-<form class="form-horizontal">
+<form class="form-horizontal" name="aaaaaa" id="aaaaaa" method="post">
   
  <div class="form-group">
     <label for="username" class="col-sm-2 control-label">用户名</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="username" placeholder="请输入用户名">
+      <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
     </div>
   </div>
    <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
     <div class="col-sm-6">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
+      <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
     </div>
   </div>
    <div class="form-group">
@@ -86,9 +91,11 @@ font {
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-    <input type="submit"  width="100" value="登录" name="submit" border="0"
+    <a href="${pageContext.request.contextPath}/login">
+    <input width="100" border="0"  type="submit"
     style="background: url('${pageContext.request.contextPath}/img/login.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     height:35px;width:100px;color:white;">
+    </a>
     </div>
   </div>
 </form>

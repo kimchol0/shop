@@ -45,6 +45,14 @@ public class UserService {
 		return isExist>0?true:false;
 	}
 	
+	//登录
+	public User login(User user) throws SQLException {
+		
+		UserDao dao = new UserDao();
+		User u = dao.login(user);
+		return u;
+		
+	}
 	
 
 }
