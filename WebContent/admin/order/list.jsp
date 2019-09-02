@@ -62,12 +62,12 @@
 								</tr>
 							
 							
-								<c:forEach items="orderList" var="order" varStatus="vs">
+								<c:forEach items="${orderList}" var="order" varStatus="vs">
 											<tr onmouseover="this.style.backgroundColor = 'white'"
 											onmouseout="this.style.backgroundColor = '#F5FAFE';">
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="18%">
-												${vs.count }
+												${vs.count}
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">

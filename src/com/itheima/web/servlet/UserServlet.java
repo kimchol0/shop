@@ -3,16 +3,15 @@ package com.itheima.web.servlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class UserServlet extends HttpServlet {
+public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	//用户注销
-	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
 		//从session中将user删除

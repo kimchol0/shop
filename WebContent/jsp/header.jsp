@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -28,7 +28,7 @@
 						</c:if>
 						<c:if test="${!empty user }">
 							<li style="color:red">欢迎您，${user.username }</li>
-							<li><a href="${pageContext.request.contextPath}/user?method=logout">退出<a></li>
+							<li><a href="${pageContext.request.contextPath}/user?method=logout">退出</a></li>
 						</c:if>
 						<li><a href="${pageContext.request.contextPath}/jsp/cart.jsp">购物车</a></li>
 						<li><a href="${pageContext.request.contextPath}/product?method=myOrders">我的订单</a></li>
